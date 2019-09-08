@@ -219,8 +219,8 @@ def my_print(strr):
     b=a.split(b"\n")
     for i in b[0:-1]:
         i+=b'\n'
-        s.send(i)
-    s.send(b[-1]+b'<EOL>\n')
+        g.send(i)
+    g.send(b[-1]+b'<EOL>\n')
     #print(strr)
 
 class EscapeRoomGame:
