@@ -2,8 +2,7 @@
 Escape Room Core
 """
 import random, sys
-import socket
-import time
+import socket, time
 
 global g
 
@@ -215,10 +214,10 @@ def advance_time(room, clock):
 
 def my_print(strr):
     global g
-    a = strr.encode()
-    b = a.split(b"\n")
+    a1=strr.encode()
+    b=a1.split(b"\n")
     for i in b[0:-1]:
-        i += b'\n'
+        i+=b'\n'
         g.send(i)
     g.send(b[-1]+b'<EOL>\n')
     #print(strr)
@@ -286,20 +285,21 @@ class EscapeRoomGame:
 
 def main(args):
     global g
-    g = socket.socket()
-    a = g.connect(('192.168.200.52', 19002))
+    g=socket.socket()
+    a=g.connect(('192.168.200.52',19002))
     g.recv(1024)
-    g.send(b'Qiyang Xie')
+    g.send(b'Qiyang Xie<EOL>\n')
     g.recv(1024)
-    g.send(b'look')
+    g.send(b'look<EOL>\n')
     g.recv(1024)
-    g.send(b'look mirror')
+    g.send(b'look mirror<EOL>\n')
     g.recv(1024)
-    g.send(b'get hairpin')
+    g.send(b'get hairpin<EOL>\n')
     g.recv(1024)
-    g.send(b'unlock door with hairpin')
+    g.send(b'unlock door with hairpin<EOL>\n')
     g.recv(1024)
-    g.send(b'open door')
+    g.send(b'open door<EOL>\n')
+    g.recv(1024)
     g.recv(1024)
     time.sleep(0.25)    
     game = EscapeRoomGame()
@@ -307,13 +307,13 @@ def main(args):
     game.start()
     while game.status == "playing":
         #g.send(b">> ")
-        command = g.recv(1024)
-        command = command.decode()
-        cmd_split = command.split('\n')
-        for i in cmd_split:
-            if i != '':
+        command=g.recv(1024)
+        command=command.decode()
+        cb=command.split('\n')
+        for i in cb:
+            if i!='':
                 output = game.command(i[0:-5])
-    print (g.recv(1024))
+    print(g.recv(1024))
         
 if __name__=="__main__":
     main(sys.argv[1:])
