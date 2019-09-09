@@ -215,10 +215,10 @@ def advance_time(room, clock):
 
 def my_print(strr):
     global g
-    a=strr.encode()
-    b=a.split(b"\n")
+    a = strr.encode()
+    b = a.split(b"\n")
     for i in b[0:-1]:
-        i+=b'\n'
+        i += b'\n'
         g.send(i)
     g.send(b[-1]+b'<EOL>\n')
     #print(strr)
@@ -286,8 +286,8 @@ class EscapeRoomGame:
 
 def main(args):
     global g
-    g=socket.socket()
-    a=g.connect(('192.168.200.52', 19002))
+    g = socket.socket()
+    a = g.connect(('192.168.200.52', 19002))
     g.recv(1024)
     g.send(b'Qiyang Xie')
     g.recv(1024)
@@ -307,10 +307,13 @@ def main(args):
     game.start()
     while game.status == "playing":
         #g.send(b">> ")
-        command=g.recv(1024)
-        command=command[0:-6]
-        command=command.decode()
-        output = game.command(command)
+        command = g.recv(1024)
+        command = command.decode()
+        cmd_split = command.split('\n')
+        for i in cmd_split:
+            if i != '':
+                output = game.command(i[0:-5])
+    print (g.recv(1024))
         
 if __name__=="__main__":
     main(sys.argv[1:])
